@@ -132,9 +132,24 @@ void draw() {
       if(mousePressed) {
         gameState = GAME_RUN;
         balloonY = 0;      
-        for(int i = 0; i < hills.length; i++) {
+        /*for(int i = 0; i < hills.length; i++) {
           hills[i] = hills[floor(random(4))];
         }
+        */
+        for(int i = 0; i < 5; i++) {
+          
+          PImage showHill = null;
+          int hillW = 0, hillH = 0;
+          
+          //配置山坡圖片、寬、高
+          switch(hills[(pointer + i) % 8]) {  
+            case _:  showHill =  null;  break;
+            case S:  showHill =  sHill;  hillW = 100;  hillH = 50;  break;
+            case M:  showHill =  mHill;  hillW = 150;  hillH = 75;  break;  
+            case L:  showHill =  lHill;  hillW = 200;  hillH = 100;  break;
+          }
+        }
+        
         pointer = 0;
         headX = 0;
         hillCounter = 0;
