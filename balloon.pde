@@ -1,4 +1,4 @@
-final int GAME_STOP = 0, GAME_RUN = 1;
+final int GAME_START = 0, GAME_STOP = 1, GAME_RUN = 2;
 int gameState;
 int balloonX = 35, balloonY, balloonW = 60, balloonH = 86;
 int fireW = 15, fireH = 20; 
@@ -17,7 +17,7 @@ int hillCounter;
 
 void setup() {
   size(800,300);
-  noCursor();  //隱藏鼠標
+  //noCursor();  //隱藏鼠標
   
   bg = loadImage("img/bg.png"); 
   balloon = loadImage("img/balloon.png"); 
@@ -30,7 +30,7 @@ void setup() {
   textAlign(CENTER);
   textFont(createFont("OpenSansRegular.ttf", 10));
   
-  gameState = GAME_RUN;
+  gameState = 0;
   balloonY = 0;
   
   // 將四種山坡隨機填入陣列
@@ -56,6 +56,17 @@ void draw() {
     
     
   switch(gameState) {
+    case GAME_START:
+      image(bg, -cameraOffsetX, 0, width, height);
+      if(mousePressed){
+        gameState = GAME_RUN;
+      }
+      
+      imageMode(CENTER);
+      image(fire, mouseX, mouseY, fireW, fireH);
+      imageMode(CORNER);
+      break;
+    
     case GAME_RUN:
     
     // 背景
@@ -113,9 +124,6 @@ void draw() {
     text(hillCounter + " hills", balloonX + (balloonW / 2), balloonY - 10);
   
     // 滑鼠圖示
-    imageMode(CENTER);
-    image(fire, mouseX, mouseY, fireW, fireH);
-    imageMode(CORNER);
     
     break;
     
@@ -140,26 +148,18 @@ void draw() {
     }
 }
 
-void mouseClicked() {
+/*void mouseClicked() {
   // 點擊滑鼠熱氣球上升 50px
   balloonY -= 50; 
 }
+*/
 
 void keyPressed() {
-  // DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
-  switch(key) {
-    case 'a':  
-    if(cameraOffsetX < 0) {
-      debugMode = true;
-      cameraOffsetX += 25;
+  if (key == CODED) {
+    switch (keyCode) {      
+    case UP:
+      balloonY -= 50; 
+      break;
     }
-    break;
-
-    case 'd':
-    if(cameraOffsetX > -width) {
-      debugMode = true;
-      cameraOffsetX -= 25;
-    }
-    break;
   }
 }
